@@ -1,4 +1,4 @@
-name: Build rest_api.json
+name: Generate REST API JSON
 
 on:
   workflow_dispatch:
@@ -10,38 +10,37 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Download cookie.json from secret URL
-        env:
-          SECRET_URL: ${{ secrets.COOKIE_URL }}
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Download cookie.json (secret)
         run: |
-          if [ -z "$SECRET_URL" ]; then
-            echo "❌ ERROR: COOKIE_URL secret is missing!"
-            exit 1
-          fi
-          curl -L "$SECRET_URL" -o cookie.json
+          curl -L "${{ secrets.COOKIE_URL }}" -o cookie.json
 
-      - name: Extract Disney Channel cookie
+      - name: Download api.json (secret)
         run: |
-          COOKIE=$(jq -r '.[] | select(.name=="Disney Channel") | .cookie' cookie.json)
-          if [ -z "$COOKIE" ]; then
-            echo "❌ ERROR: Disney Channel cookie not found!"
-            exit 1
-          fi
-          echo "COOKIE=$COOKIE" >> $GITHUB_ENV
+          curl -L "${{ secrets.API_URL }}" -o api.json
 
-      - name: Build rest_api.json
+      - name: Generate rest_api.json
         run: |
-          jq --arg ck "$COOKIE" '
-            [.[] | select(.name=="Disney Channel")
-              | .mpd = (.mpd + "?" + $ck)
-              | .cookie = $ck
-            ]' api.json > rest_api.json
+          jq -s '
+            def get_cookie(n):
+              (.[0][] | select(.name == n) | .cookie);
 
-      - name: Upload rest_api.json
-        uses: actions/upload-artifact@v4
-        with:
-          name: rest_api
-          path: rest_api.json
+            [.[1][] 
+              | .cookie = get_cookie(.name)
+              | .mpd = (.mpd + "?" + get_cookie(.name))
+            ]
+          ' cookie.json api.json > rest_api.json
+
+      - name: Commit & Push rest_api.json
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add rest_api.json
+          git commit -m "Auto update rest_api.json" || echo "No changes"
+          git push
