@@ -1,0 +1,47 @@
+name: Build JIO
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"   
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Download cookie.json from secret URL
+        env:
+          SECRET_URL: ${{ secrets.COOKIE_URL }}
+        run: |
+          if [ -z "$SECRET_URL" ]; then
+            echo "ERROR: COOKIE_URL secret is missing!"
+            exit 1
+          fi
+          curl -L "$SECRET_URL" -o cookie.json
+
+      - name: Extract Disney Channel cookie
+        run: |
+          COOKIE=$(jq -r '.[] | select(.name=="Disney Channel") | .cookie' cookie.json)
+          if [ -z "$COOKIE" ]; then
+            echo "ERROR: Disney Channel cookie not found!"
+            exit 1
+          fi
+          echo "COOKIE=$COOKIE" >> $GITHUB_ENV
+
+      - name: Build rest_api.json
+        run: |
+          jq --arg ck "$COOKIE" '
+            [.[] | select(.name=="Disney Channel")
+              | .mpd = (.mpd + "?" + $ck)
+              | .cookie = $ck
+            ]' api.json > rest_api.json
+
+      - name: Upload rest_api.json
+        uses: actions/upload-artifact@v3
+        with:
+          name: rest_api
+          path: rest_api.json
