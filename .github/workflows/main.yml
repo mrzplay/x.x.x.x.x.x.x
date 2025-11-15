@@ -1,36 +1,47 @@
-name: Generate REST API JSON
+name: Apis X.X.x.x.x.x.x.x
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/30 * * * *"   
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Install jq
-        run: sudo apt-get install -y jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Download cookie.json (secret)
+      - name: Download cookie.json (secret URL)
         run: |
+          if [ -z "${{ secrets.COOKIE_URL }}" ]; then
+            echo "ERROR: COOKIE_URL secret is missing!"
+            exit 1
+          fi
           curl -L "${{ secrets.COOKIE_URL }}" -o cookie.json
 
-      - name: Download api.json (secret)
+      - name: Download api.json (secret URL)
         run: |
+          if [ -z "${{ secrets.API_URL }}" ]; then
+            echo "ERROR: API_URL secret is missing!"
+            exit 1
+          fi
           curl -L "${{ secrets.API_URL }}" -o api.json
 
       - name: Generate rest_api.json
         run: |
           jq -s '
+            # find cookie by channel name
             def get_cookie(n):
               (.[0][] | select(.name == n) | .cookie);
 
-            [.[1][] 
+            # create final merged structure
+            [.[1][]
               | .cookie = get_cookie(.name)
               | .mpd = (.mpd + "?" + get_cookie(.name))
             ]
@@ -40,7 +51,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-
           git add rest_api.json
           git commit -m "Auto update rest_api.json" || echo "No changes"
           git push
