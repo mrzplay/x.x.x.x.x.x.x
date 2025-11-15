@@ -1,9 +1,9 @@
-name: Build JIO
+name: Build rest_api.json
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"   
+    - cron: "*/30 * * * *"
 
 jobs:
   build:
@@ -11,14 +11,14 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download cookie.json from secret URL
         env:
           SECRET_URL: ${{ secrets.COOKIE_URL }}
         run: |
           if [ -z "$SECRET_URL" ]; then
-            echo "ERROR: COOKIE_URL secret is missing!"
+            echo "❌ ERROR: COOKIE_URL secret is missing!"
             exit 1
           fi
           curl -L "$SECRET_URL" -o cookie.json
@@ -27,7 +27,7 @@ jobs:
         run: |
           COOKIE=$(jq -r '.[] | select(.name=="Disney Channel") | .cookie' cookie.json)
           if [ -z "$COOKIE" ]; then
-            echo "ERROR: Disney Channel cookie not found!"
+            echo "❌ ERROR: Disney Channel cookie not found!"
             exit 1
           fi
           echo "COOKIE=$COOKIE" >> $GITHUB_ENV
@@ -41,7 +41,7 @@ jobs:
             ]' api.json > rest_api.json
 
       - name: Upload rest_api.json
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: rest_api
           path: rest_api.json
