@@ -1,9 +1,8 @@
 name: Apis X.X.x.x.x.x.x.x
-
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/30 * * * *"   
+    - cron: "*/30 * * * *"
 
 jobs:
   build:
@@ -17,37 +16,36 @@ jobs:
       - name: Install jq
         run: sudo apt-get update && sudo apt-get install -y jq
 
-      - name: Download cookie.json (secret URL)
+      - name: Download cookie.json
         run: |
-          if [ -z "${{ secrets.COOKIE_URL }}" ]; then
-            echo "ERROR: COOKIE_URL secret is missing!"
-            exit 1
-          fi
           curl -L "${{ secrets.COOKIE_URL }}" -o cookie.json
 
-      - name: Download api.json (secret URL)
+      - name: Download api.json
         run: |
-          if [ -z "${{ secrets.API_URL }}" ]; then
-            echo "ERROR: API_URL secret is missing!"
-            exit 1
-          fi
           curl -L "${{ secrets.API_URL }}" -o api.json
+
+      - name: Fix api.json if not array
+        run: |
+          # if file does NOT start with [
+          if ! head -n 1 api.json | grep -q '\['; then
+            echo "[INFO] api.json is NOT an array, fixing..."
+            sed -i '1s/^/[/' api.json      # add opening bracket
+            echo "]" >> api.json           # add closing bracket
+          fi
 
       - name: Generate rest_api.json
         run: |
           jq -s '
-            # find cookie by channel name
             def get_cookie(n):
               (.[0][] | select(.name == n) | .cookie);
 
-            # create final merged structure
             [.[1][]
               | .cookie = get_cookie(.name)
               | .mpd = (.mpd + "?" + get_cookie(.name))
             ]
           ' cookie.json api.json > rest_api.json
 
-      - name: Commit & Push rest_api.json
+      - name: Commit & Push
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
