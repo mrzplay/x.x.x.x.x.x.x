@@ -45,7 +45,7 @@ jobs:
               if name in cookie_map:
                   cookie = cookie_map[name]
                   ch["cookie"] = cookie
-                  ch["mpd"] = f'{ch["mpd"]}?{cookie}'
+                  ch["mpd"] =f'{ch["mpd"]}?{cookie}&xxx=%7Ccookie={cookie}'
               output.append(ch)
 
           with open("rest_api.json", "w") as f:
