@@ -2,16 +2,21 @@ name: Build REST API
 
 on:
   schedule:
-    - cron: "*/10 * * * *"   
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write   
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -37,7 +42,6 @@ jobs:
           channels = requests.get(CHANNEL_URL).json()
 
           cookie_map = {c["name"]: c["cookie"] for c in cookies}
-
           output = []
 
           for ch in channels:
@@ -45,7 +49,7 @@ jobs:
               if name in cookie_map:
                   cookie = cookie_map[name]
                   ch["cookie"] = cookie
-                  ch["mpd"] =f'{ch["mpd"]}?{cookie}&xxx=%7Ccookie={cookie}'
+                  ch["mpd"] = f'{ch["mpd"]}?{cookie}&xxx=%7Ccookie={cookie}'
               output.append(ch)
 
           with open("rest_api.json", "w") as f:
@@ -55,9 +59,11 @@ jobs:
           python3 script.py
 
       - name: Commit & Push Changes
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Action"
           git add rest_api.json
           git commit -m "Auto-update rest_api.json" || echo "No changes"
-          git push
+          git push https://${TOKEN}@github.com/${{ github.repository }}.git
