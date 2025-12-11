@@ -1,62 +1,72 @@
-name: Update Zee5 API
+name: Update pookie API
 
 on:
   schedule:
-    - cron: "0 */6 * * *"   
+    - cron: "0 */6 * * *"  
   workflow_dispatch:
 
 jobs:
-  build:
+  update:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: Install requests
+      - name: Install dependencies
         run: pip install requests
 
-      - name: Fetch and Convert API
+      - name: Fetch & Convert API
+        env:
+          API_URL: ${{ secrets.ZEE5_API_URL }}
         run: |
           python3 << 'EOF'
-          import requests, json, os
+          import requests, json, os, urllib.parse
 
-          # API Source
-          url = "https://raw.githubusercontent.com/hasanhabibmottakin/Z5/refs/heads/main/rest_api.json"
+          print("Fetching:", os.environ["API_URL"])
+          response = requests.get(os.environ["API_URL"])
+          full_json = response.json()
 
-          # Fetch JSON
-          data = requests.get(url).json().get("data", [])
+          # Source JSON contains: title, developers, data[]
+          channels = full_json.get("data", [])
 
-          # Convert to your Python script format
-          output = []
-          for ch in data:
-              output.append({
+          final = []
+
+          for ch in channels:
+              url = ch.get("url", "")
+
+              # Split m3u8 + token
+              if "?" in url:
+                  m3u8, token = url.split("?", 1)
+              else:
+                  m3u8, token = url, ""
+
+              final.append({
                   "id": ch.get("id", ""),
                   "name": ch.get("name", ""),
-                  "m3u8": ch.get("url", ""),
-                  "token": "",                      
-                  "useragent": "Mozilla/5.0"
+                  "m3u8": m3u8,
+                  "token": token,
+                  "useragent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 ygx/69.1 Safari/537.36"
               })
 
-          # Folder check
+          # Save into folder Z5/
           os.makedirs("Z5", exist_ok=True)
 
-          # Save file
           with open("Z5/rest_api.json", "w") as f:
-              json.dump(output, f, indent=2)
+              json.dump(final, f, indent=2)
 
-          print("ZEE5 API Updated Successfully")
+          print("ZEE5 API updated successfully.")
           EOF
 
-      - name: Commit and Push changes
+      - name: Commit & Push
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           git add Z5/rest_api.json
-          git commit -m "Updated Zee5 API" || echo "No changes to commit"
+          git commit -m "Auto-updated ZEE5 API" || echo "No changes"
           git push
