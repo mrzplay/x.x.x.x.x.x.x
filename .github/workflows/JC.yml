@@ -1,4 +1,4 @@
-name: Update M3U to JC JSON API
+name: Update JCH DATA
 
 on:
   schedule:
@@ -83,5 +83,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add JC/rest_api.json
-          git commit -m "Automated update: JC/rest_api.json" || exit 0
+          git commit -m "Auto-updated JCH API" || exit 0
           git push
