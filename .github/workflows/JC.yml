@@ -20,7 +20,7 @@ jobs:
 
       - name: Fetch and Convert M3U to JSON
         env:
-          M3U_URL: ${{ secrets.API_URL }}
+          M3U_URL: ${{ secrets.JCH_API_URL }}
         run: |
           python - <<EOF
           import requests
