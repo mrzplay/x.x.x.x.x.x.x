@@ -28,33 +28,41 @@ jobs:
           import json
           import os
 
+          # ফোল্ডার তৈরি না থাকলে তৈরি করা হবে
+          if not os.path.exists('JC'):
+              os.makedirs('JC')
+
           url = os.getenv('M3U_URL')
-          response = requests.get(url)
-          content = response.text
+          try:
+              response = requests.get(url)
+              content = response.text
 
-          channels = []
-          pattern = r'#EXTINF:-1 tvg-id="(.*?)".*?,(.*?)\n(?:#EXTVLCOPT:http-user-agent=(.*?)\n)?(?:#EXTHTTP:{"cookie":"(.*?)"}\n)?.*?(\nhttps?://\S+)'
-          
-          matches = re.findall(pattern, content, re.DOTALL)
+              channels = []
+              pattern = r'#EXTINF:-1 tvg-id="(.*?)".*?,(.*?)\n(?:#EXTVLCOPT:http-user-agent=(.*?)\n)?(?:#EXTHTTP:{"cookie":"(.*?)"}\n)?.*?(\nhttps?://\S+)'
+              
+              matches = re.findall(pattern, content, re.DOTALL)
 
-          for match in matches:
-              tvg_id, name, ua, cookie, m3u8_url = match
-              channels.append({
-                  "id": tvg_id.strip(),
-                  "name": name.strip(),
-                  "m3u8": m3u8_url.strip(),
-                  "token": cookie.strip(),
-                  "useragent": ua.strip()
-              })
+              for match in matches:
+                  tvg_id, name, ua, cookie, m3u8_url = match
+                  channels.append({
+                      "id": tvg_id.strip(),
+                      "name": name.strip(),
+                      "m3u8": m3u8_url.strip(),
+                      "token": cookie.strip(),
+                      "useragent": ua.strip()
+                  })
 
-          with open('rest_api.json', 'w', encoding='utf-8') as f:
-              json.dump(channels, f, indent=2, ensure_ascii=False)
+              with open('JC/rest_api.json', 'w', encoding='utf-8') as f:
+                  json.dump(channels, f, indent=2, ensure_ascii=False)
+              print("Successfully saved to JC/rest_api.json")
+          except Exception as e:
+              print(f"Error: {e}")
           EOF
 
       - name: Commit and Push changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add rest_api.json
-          git commit -m "Update rest_api.json - $(date)" || exit 0
+          git add JC/rest_api.json
+          git commit -m "Update JC/rest_api.json - $(date)" || exit 0
           git push
