@@ -39,28 +39,27 @@ jobs:
           try:
               response = requests.get(url)
               content = response.text
+              
               items = content.split('#EXTINF')
               channels = []
 
               for item in items[1:]:
-
                   id_match = re.search(r'tvg-id="(.*?)"', item)
                   
-       
-                  name_match = re.search(r',\s*([^\n\r]+)', item)
-
+                  line_parts = item.split('\n')[0]
+                  name_match = re.search(r',\s*([^,\n\r]+)$', line_parts)
+                  
                   cookie_match = re.search(r'"cookie":"(.*?)"', item)
                   
-   
-                  ua_match = re.search(r'user-agent=([^\n\r\s]+)', item)
+                  ua_match = re.search(r'user-agent=([^\n\r]+)', item)
                   
-                  url_list = re.findall(r'(https?://[^\s]+)', item)
+                  url_list = re.findall(r'(https?://[^\s\n\r"]+)', item)
                   m3u8_url = url_list[-1] if url_list else ""
 
                   if m3u8_url:
                       channels.append({
                           "id": id_match.group(1) if id_match else "",
-                          "name": name_match.group(1).strip() if name_match else "",
+                          "name": name_match.group(1).strip() if name_match else "Unknown",
                           "m3u8": m3u8_url.strip(),
                           "token": cookie_match.group(1) if cookie_match else "",
                           "useragent": ua_match.group(1).strip() if ua_match else ""
@@ -69,10 +68,8 @@ jobs:
               with open('JC/rest_api.json', 'w', encoding='utf-8') as f:
                   json.dump(channels, f, indent=2, ensure_ascii=False)
               
-              print("JSON updated successfully!")
-
           except Exception as e:
-              print(f"Error: {e}")
+              pass
           EOF
 
       - name: Commit and Push changes
@@ -80,5 +77,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add JC/rest_api.json
-          git commit -m "JCH DATA UPDATED - $(date)" || exit 0
+          git commit -m "JCH DATA UPDATED" || exit 0
           git push
