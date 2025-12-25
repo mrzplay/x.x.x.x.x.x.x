@@ -1,4 +1,4 @@
-name: Update JCH DATA 
+name: Update M3U to JC JSON API
 
 on:
   schedule:
@@ -8,6 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
@@ -17,6 +19,11 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests
 
       - name: Fetch and Convert M3U to JSON
         env:
@@ -28,35 +35,47 @@ jobs:
           import json
           import os
 
-          # ফোল্ডার তৈরি না থাকলে তৈরি করা হবে
           if not os.path.exists('JC'):
               os.makedirs('JC')
 
           url = os.getenv('M3U_URL')
+          if not url:
+              print("Error: JCH_API_URL secret is not set!")
+              exit(1)
+
           try:
               response = requests.get(url)
               content = response.text
-
-              channels = []
-              pattern = r'#EXTINF:-1 tvg-id="(.*?)".*?,(.*?)\n(?:#EXTVLCOPT:http-user-agent=(.*?)\n)?(?:#EXTHTTP:{"cookie":"(.*?)"}\n)?.*?(\nhttps?://\S+)'
               
-              matches = re.findall(pattern, content, re.DOTALL)
+     
+              items = content.split('#EXTINF:-1')
+              channels = []
 
-              for match in matches:
-                  tvg_id, name, ua, cookie, m3u8_url = match
-                  channels.append({
-                      "id": tvg_id.strip(),
-                      "name": name.strip(),
-                      "m3u8": m3u8_url.strip(),
-                      "token": cookie.strip(),
-                      "useragent": ua.strip()
-                  })
+              for item in items[1:]:
+     
+                  id_match = re.search(r'tvg-id="(.*?)"', item)
+                  name_match = re.search(r',([^\n\r]+)', item)
+                  ua_match = re.search(r'user-agent=([^\n\r]+)', item)
+                  cookie_match = re.search(r'"cookie":"(.*?)"', item)
+                  url_match = re.search(r'(https?://[^\s]+)', item)
+
+                  if url_match:
+                      channels.append({
+                          "id": id_match.group(1) if id_match else "",
+                          "name": name_match.group(1).strip() if name_match else "",
+                          "m3u8": url_match.group(1).strip(),
+                          "token": cookie_match.group(1) if cookie_match else "",
+                          "useragent": ua_match.group(1).strip() if ua_match else ""
+                      })
 
               with open('JC/rest_api.json', 'w', encoding='utf-8') as f:
                   json.dump(channels, f, indent=2, ensure_ascii=False)
-              print("Successfully saved to JC/rest_api.json")
+              
+              print(f"Successfully processed {len(channels)} channels.")
+
           except Exception as e:
-              print(f"Error: {e}")
+              print(f"An error occurred: {e}")
+              exit(1)
           EOF
 
       - name: Commit and Push changes
@@ -64,5 +83,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add JC/rest_api.json
-          git commit -m "Update JC/rest_api.json - $(date)" || exit 0
+          git commit -m "Automated update: JC/rest_api.json" || exit 0
           git push
