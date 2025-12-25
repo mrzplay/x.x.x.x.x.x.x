@@ -1,0 +1,60 @@
+name: Update JCH DATA 
+
+on:
+  schedule:
+    - cron: "0 */5 * * *"
+  workflow_dispatch: 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Fetch and Convert M3U to JSON
+        env:
+          M3U_URL: ${{ secrets.API_URL }}
+        run: |
+          python - <<EOF
+          import requests
+          import re
+          import json
+          import os
+
+          url = os.getenv('M3U_URL')
+          response = requests.get(url)
+          content = response.text
+
+          channels = []
+          pattern = r'#EXTINF:-1 tvg-id="(.*?)".*?,(.*?)\n(?:#EXTVLCOPT:http-user-agent=(.*?)\n)?(?:#EXTHTTP:{"cookie":"(.*?)"}\n)?.*?(\nhttps?://\S+)'
+          
+          matches = re.findall(pattern, content, re.DOTALL)
+
+          for match in matches:
+              tvg_id, name, ua, cookie, m3u8_url = match
+              channels.append({
+                  "id": tvg_id.strip(),
+                  "name": name.strip(),
+                  "m3u8": m3u8_url.strip(),
+                  "token": cookie.strip(),
+                  "useragent": ua.strip()
+              })
+
+          with open('rest_api.json', 'w', encoding='utf-8') as f:
+              json.dump(channels, f, indent=2, ensure_ascii=False)
+          EOF
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add rest_api.json
+          git commit -m "Update rest_api.json - $(date)" || exit 0
+          git push
