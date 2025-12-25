@@ -1,9 +1,8 @@
-name: Update JCH DATA
-
+name: Update JCHD DATA
 on:
   schedule:
     - cron: "0 */5 * * *"
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,9 +20,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests
+        run: pip install requests
 
       - name: Fetch and Convert M3U to JSON
         env:
@@ -39,31 +36,32 @@ jobs:
               os.makedirs('JC')
 
           url = os.getenv('M3U_URL')
-          if not url:
-              print("Error: JCH_API_URL secret is not set!")
-              exit(1)
-
           try:
               response = requests.get(url)
               content = response.text
-              
-     
-              items = content.split('#EXTINF:-1')
+              items = content.split('#EXTINF')
               channels = []
 
               for item in items[1:]:
-     
-                  id_match = re.search(r'tvg-id="(.*?)"', item)
-                  name_match = re.search(r',([^\n\r]+)', item)
-                  ua_match = re.search(r'user-agent=([^\n\r]+)', item)
-                  cookie_match = re.search(r'"cookie":"(.*?)"', item)
-                  url_match = re.search(r'(https?://[^\s]+)', item)
 
-                  if url_match:
+                  id_match = re.search(r'tvg-id="(.*?)"', item)
+                  
+       
+                  name_match = re.search(r',\s*([^\n\r]+)', item)
+
+                  cookie_match = re.search(r'"cookie":"(.*?)"', item)
+                  
+   
+                  ua_match = re.search(r'user-agent=([^\n\r\s]+)', item)
+                  
+                  url_list = re.findall(r'(https?://[^\s]+)', item)
+                  m3u8_url = url_list[-1] if url_list else ""
+
+                  if m3u8_url:
                       channels.append({
                           "id": id_match.group(1) if id_match else "",
                           "name": name_match.group(1).strip() if name_match else "",
-                          "m3u8": url_match.group(1).strip(),
+                          "m3u8": m3u8_url.strip(),
                           "token": cookie_match.group(1) if cookie_match else "",
                           "useragent": ua_match.group(1).strip() if ua_match else ""
                       })
@@ -71,11 +69,10 @@ jobs:
               with open('JC/rest_api.json', 'w', encoding='utf-8') as f:
                   json.dump(channels, f, indent=2, ensure_ascii=False)
               
-              print(f"Successfully processed {len(channels)} channels.")
+              print("JSON updated successfully!")
 
           except Exception as e:
-              print(f"An error occurred: {e}")
-              exit(1)
+              print(f"Error: {e}")
           EOF
 
       - name: Commit and Push changes
@@ -83,5 +80,5 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add JC/rest_api.json
-          git commit -m "Auto-updated JCH API" || exit 0
+          git commit -m "JCH DATA UPDATED - $(date)" || exit 0
           git push
