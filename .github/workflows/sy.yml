@@ -1,0 +1,39 @@
+name: Sony Token 
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "*/30 * * * *"   
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Fetch API & Format JSON
+        env:
+          SY_API: ${{ secrets.syApi }}
+        run: |
+          mkdir -p SY
+
+          RESPONSE=$(curl -s "$SY_API")
+
+          TOKEN=$(echo "$RESPONSE" | jq -r '.token')
+
+          cat <<EOF > SY/Sy.json
+          {
+            "status": "success",
+            "message": "$TOKEN"
+          }
+          EOF
+
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add SY/Sy.json
+          git commit -m "Update Sony token"
+          git push
