@@ -27,7 +27,7 @@ jobs:
               const itemId = crypto.createHash('md5').update(name).digest('hex');
               const cookie = (item.cookie || '').toString();
               const drm = (item.drmLicense || '').toString();
-              const mpdUrl = `${link}?${cookie}&xxx=%7Ccookie=${cookie}`;
+              const mpdUrl = `${link}?${cookie}`;
               outputData.push({
                 id: itemId,
                 logo: (item.logo || '').toString(),
