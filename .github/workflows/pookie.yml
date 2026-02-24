@@ -23,7 +23,7 @@ jobs:
 
       - name: Fetch & Convert API
         env:
-          API_URL: ${{ secrets.ZEE5_API_URL2 }}
+          API_URL: ${{ secrets.ZEE5_API_URL }}
         run: |
           python3 << 'EOF'
           import requests, json, os, urllib.parse
