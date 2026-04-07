@@ -19,7 +19,7 @@ jobs:
 
             const m3uUrl = process.env.M3U_URL;
             if (!m3uUrl) {
-              console.error('M3U_URL secret is not set');
+              console.error('jtv_URL secret is not set');
               return;
             }
 
