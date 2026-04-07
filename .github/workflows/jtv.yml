@@ -35,7 +35,7 @@ jobs:
 
             const m3uContent = await response.text();
             const lines = m3uContent.split('\n');
-            const outputData = [];
+            let outputData = {};
             const seenCookies = new Set();
 
             for (const line of lines) {
@@ -48,7 +48,7 @@ jobs:
                   const parsed = JSON.parse(jsonStr);
                   if (parsed.cookie && !seenCookies.has(parsed.cookie)) {
                     seenCookies.add(parsed.cookie);
-                    outputData.push({ cookie: parsed.cookie });
+                    outputData = { cookie: parsed.cookie };
                   }
                 } catch (e) {
                   console.warn('Failed to parse EXTHTTP line:', trimmed);
