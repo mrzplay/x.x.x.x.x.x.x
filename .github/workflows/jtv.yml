@@ -48,7 +48,7 @@ jobs:
                   const parsed = JSON.parse(jsonStr);
                   if (parsed.cookie && !seenCookies.has(parsed.cookie)) {
                     seenCookies.add(parsed.cookie);
-                    outputData = { cookie: parsed.cookie };
+                    outputData = {cookie: parsed.cookie};
                   }
                 } catch (e) {
                   console.warn('Failed to parse EXTHTTP line:', trimmed);
