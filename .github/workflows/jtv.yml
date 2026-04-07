@@ -56,7 +56,7 @@ jobs:
               }
             }
 
-            fs.writeFileSync('cookies.json', JSON.stringify(outputData, null, 4), 'utf8');
+            fs.writeFileSync('jtvc.json', JSON.stringify(outputData, null, 4), 'utf8');
             console.log(`Extracted ${outputData.length} unique cookies`);
 
       - run: |
