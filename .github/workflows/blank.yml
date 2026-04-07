@@ -1,0 +1,68 @@
+name: jtv api
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/github-script@v7
+        env:
+          M3U_URL: ${{ secrets.M3U_URL }}
+        with:
+          script: |
+            const fs = require('fs');
+
+            const m3uUrl = process.env.M3U_URL;
+            if (!m3uUrl) {
+              console.error('M3U_URL secret is not set');
+              return;
+            }
+
+            // Fetch the M3U content from URL
+            const response = await fetch(m3uUrl, {
+              headers: { 'User-Agent': 'Mozilla/5.0' }
+            });
+
+            if (!response.ok) {
+              console.error('Failed to fetch M3U:', response.status);
+              return;
+            }
+
+            const m3uContent = await response.text();
+            const lines = m3uContent.split('\n');
+            const outputData = [];
+            const seenCookies = new Set();
+
+            for (const line of lines) {
+              const trimmed = line.trim();
+
+              // Match lines like: #EXTHTTP:{"cookie":"..."}
+              if (trimmed.startsWith('#EXTHTTP:')) {
+                try {
+                  const jsonStr = trimmed.slice('#EXTHTTP:'.length);
+                  const parsed = JSON.parse(jsonStr);
+                  if (parsed.cookie && !seenCookies.has(parsed.cookie)) {
+                    seenCookies.add(parsed.cookie);
+                    outputData.push({ cookie: parsed.cookie });
+                  }
+                } catch (e) {
+                  console.warn('Failed to parse EXTHTTP line:', trimmed);
+                }
+              }
+            }
+
+            fs.writeFileSync('cookies.json', JSON.stringify(outputData, null, 4), 'utf8');
+            console.log(`Extracted ${outputData.length} unique cookies`);
+
+      - run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add cookies.json
+          git status
+          git commit -m "update cookies" || exit 0
+          git push
