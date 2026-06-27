@@ -1,0 +1,46 @@
+name: jtv api by codercrafter ceo
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/github-script@v7
+        env:
+          API_URL: ${{ secrets.JSPORTS_URL }}
+        with:
+          script: |
+            const crypto = require('crypto');
+            const fs = require('fs');
+            const apiUrl = process.env.API_URL;
+            if (!apiUrl) return;
+            const response = await fetch(apiUrl, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+            const inputData = await response.json();
+            const outputData = [];
+            for (const item of inputData) {
+              const name = (item.name || '').toString().trim();
+              const link = (item.link || '').toString().trim();
+              if (!name || !link) continue;
+              const itemId = crypto.createHash('md5').update(name).digest('hex');
+              const cookie = (item.cookie || '').toString();
+              const drm = (item.drmLicense || '').toString();
+              const mpdUrl = `${link}?${cookie}`;
+              outputData.push({
+                id: itemId,
+                logo: (item.logo || '').toString(),
+                name: name,
+                clearkey: drm,
+                mpd: mpdUrl,
+                cookie: cookie
+              });
+            }
+            fs.writeFileSync('rest_api.json', JSON.stringify(outputData, null, 4), 'utf8');
+      - run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add jsports.json
+          git commit -m "update" || exit 0
+          git push
