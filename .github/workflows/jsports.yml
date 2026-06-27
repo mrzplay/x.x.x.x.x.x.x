@@ -1,4 +1,4 @@
-name: jtv api by codercrafter ceo
+name: jsports
 on:
   schedule:
     - cron: '0 * * * *'
