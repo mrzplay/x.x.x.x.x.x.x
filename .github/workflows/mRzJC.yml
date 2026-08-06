@@ -40,29 +40,37 @@ jobs:
           entries = content.split("#EXTINF:")
 
           for i, entry in enumerate(entries[1:], start=1):
+              # tvg-name থেকে সরাসরি নাম তোলার জন্য
+              tvg_name_match = re.search(r"tvg-name=\"([^\"]+)\"", entry)
+              if tvg_name_match:
+                  raw_name = tvg_name_match.group(1)
+                  channel_name = raw_name.split(" By ")[0].split(" @")[0].strip()
+              else:
+                  comma_split = entry.split(",")
+                  channel_name = comma_split[-1].strip().split(" @")[0] if len(comma_split) > 1 else "Unknown"
+
               # Logo
               logo_match = re.search(r"tvg-logo=\"([^\"]+)\"", entry)
-              
-              # Channel Display Name
-              comma_split = entry.split(",")
-              channel_name = comma_split[-1].strip().split(" @")[0] if len(comma_split) > 1 else "Unknown"
+              logo_val = logo_match.group(1) if logo_match else ""
 
               # Cookie
-              cookie_match = re.search(r"cookie=([^&\n]+)", entry)
-              
+              cookie_match = re.search(r"cookie=([^&\n\"]+)", entry)
+              cookie_val = cookie_match.group(1) if cookie_match else ""
+
               # Stream URL (m3u8/mpd)
               url_match = re.search(r"(https?://[^\s\?]+\.m3u8[^\s]*)", entry)
 
               if url_match:
-                  stream_url = url_match.group(1).split("|")[0]
-                  cookie_val = cookie_match.group(1) if cookie_match else ""
-                  logo_val = logo_match.group(1) if logo_match else ""
+                  clean_url = url_match.group(1).split("|")[0].rstrip("?")
+                  
+                  # mpd format: url + ? + cookie
+                  final_mpd = f"{clean_url}?{cookie_val}" if cookie_val else clean_url
 
                   channel_data = {
                       "id": str(i),
                       "logo": logo_val,
                       "name": channel_name,
-                      "mpd": stream_url,
+                      "mpd": final_mpd,
                       "cookie": cookie_val
                   }
                   channels.append(channel_data)
