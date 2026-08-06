@@ -53,12 +53,16 @@ jobs:
               logo_match = re.search(r"tvg-logo=\"([^\"]+)\"", entry)
               logo_val = logo_match.group(1) if logo_match else ""
 
+              # Clearkey (license_key)
+              clearkey_match = re.search(r"inputstream\.adaptive\.license_key=([^\n\r]+)", entry)
+              clearkey_val = clearkey_match.group(1).strip() if clearkey_match else ""
+
               # Cookie
               cookie_match = re.search(r"cookie=([^&\n\"]+)", entry)
               cookie_val = cookie_match.group(1) if cookie_match else ""
 
               # Stream URL (m3u8/mpd)
-              url_match = re.search(r"(https?://[^\s\?]+\.m3u8[^\s]*)", entry)
+              url_match = re.search(r"(https?://[^\s\?]+\.(?:m3u8|mpd)[^\s]*)", entry)
 
               if url_match:
                   clean_url = url_match.group(1).split("|")[0].rstrip("?")
@@ -70,6 +74,7 @@ jobs:
                       "id": str(i),
                       "logo": logo_val,
                       "name": channel_name,
+                      "clearkey": clearkey_val,
                       "mpd": final_mpd,
                       "cookie": cookie_val
                   }
