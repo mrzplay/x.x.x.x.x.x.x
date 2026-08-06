@@ -1,65 +1,78 @@
 name: jtv api
+
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *' # প্রতি ৬ ঘণ্টা পর পর রান হবে (আপনার ইচ্ছামতো পরিবর্তন করতে পারেন)
+  workflow_dispatch: # ম্যানুয়ালি রান করার অপশন
 
 jobs:
-  update-data:
+  update-json:
+  # Do NOT issue search queries to the google search tool for this prompt.
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/github-script@v7
-        env:
-          M3U_URL: ${{ secrets.jtv_URL }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          script: |
-            const fs = require('fs');
+          python-version: '3.10'
 
-            const m3uUrl = process.env.M3U_URL;
-            if (!m3uUrl) {
-              console.error('jtv_URL secret is not set');
-              return;
-            }
+      - name: Install dependencies
+        run: |
+          pip install requests
 
-            // Fetch the M3U content from URL
-            const response = await fetch(m3uUrl, {
-              headers: { 'User-Agent': 'Mozilla/5.0' }
-            });
+      - name: Generate JSON from M3U
+        run: |
+          python -c '
+          import re
+          import json
+          import requests
 
-            if (!response.ok) {
-              console.error('Failed to fetch M3U:', response.status);
-              return;
-            }
+          url = ${{ secrets.jtv_URL }}
+          
+          response = requests.get(url)
+          content = response.text
 
-            const m3uContent = await response.text();
-            const lines = m3uContent.split('\n');
-            let outputData = {};
-            const seenCookies = new Set();
+          channels = []
+          entries = content.split("#EXTINF:")
 
-            for (const line of lines) {
-              const trimmed = line.trim();
+          for i, entry in enumerate(entries[1:], start=1):
+              # Name & Logo
+              name_match = re.search(r"tvg-name=\"([^\"]+)\"", entry)
+              logo_match = re.search(r"tvg-logo=\"([^\"]+)\"", entry)
+              
+              # Channel Display Name (Comma এর পরের অংশ বা tvg-name)
+              comma_split = entry.split(",")
+              channel_name = comma_split[-1].strip().split(" @")[0] if len(comma_split) > 1 else "Unknown"
 
-              // Match lines like: #EXTHTTP:{"cookie":"..."}
-              if (trimmed.startsWith('#EXTHTTP:')) {
-                try {
-                  const jsonStr = trimmed.slice('#EXTHTTP:'.length);
-                  const parsed = JSON.parse(jsonStr);
-                  if (parsed.cookie && !seenCookies.has(parsed.cookie)) {
-                    seenCookies.add(parsed.cookie);
-                    outputData = {cookie: parsed.cookie};
+              # Cookie
+              cookie_match = re.search(r"cookie=([^&\n]+)", entry)
+              
+              # Stream URL (m3u8/mpd)
+              url_match = re.search(r"(https?://[^\s\?]+\.m3u8[^\s]*)", entry)
+
+              if url_match:
+                  stream_url = url_match.group(1).split("|")[0]
+                  cookie_val = cookie_match.group(1) if cookie_match else ""
+                  logo_val = logo_match.group(1) if logo_match else ""
+
+                  channel_data = {
+                      "id": str(i),
+                      "logo": logo_val,
+                      "name": channel_name,
+                      "mpd": stream_url,
+                      "cookie": cookie_val
                   }
-                } catch (e) {
-                  console.warn('Failed to parse EXTHTTP line:', trimmed);
-                }
-              }
-            }
+                  channels.append(channel_data)
 
-            fs.writeFileSync('jtvc.json', JSON.stringify(outputData, null, 4), 'utf8');
-            console.log(`Extracted ${outputData.length} unique cookies`);
+          with open("channels.json", "w", encoding="utf-8") as f:
+              json.dump(channels, f, indent=4, ensure_ascii=False)
+          print("Successfully generated channels.json")
+          '
 
-      - run: |
+      - name: Commit and Push changes
+        - run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add jtvc.json
