@@ -1,0 +1,80 @@
+name: mRz-JC
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Generate JSON from M3U
+        env:
+          MRZJC_URL: ${{ secrets.MRZJC }}
+        run: |
+          python -c '
+          import re
+          import json
+          import requests
+          import os
+
+          url = os.environ.get("MRZJC_URL")
+          
+          response = requests.get(url)
+          content = response.text
+
+          channels = []
+          entries = content.split("#EXTINF:")
+
+          for i, entry in enumerate(entries[1:], start=1):
+              # Logo
+              logo_match = re.search(r"tvg-logo=\"([^\"]+)\"", entry)
+              
+              # Channel Display Name
+              comma_split = entry.split(",")
+              channel_name = comma_split[-1].strip().split(" @")[0] if len(comma_split) > 1 else "Unknown"
+
+              # Cookie
+              cookie_match = re.search(r"cookie=([^&\n]+)", entry)
+              
+              # Stream URL (m3u8/mpd)
+              url_match = re.search(r"(https?://[^\s\?]+\.m3u8[^\s]*)", entry)
+
+              if url_match:
+                  stream_url = url_match.group(1).split("|")[0]
+                  cookie_val = cookie_match.group(1) if cookie_match else ""
+                  logo_val = logo_match.group(1) if logo_match else ""
+
+                  channel_data = {
+                      "id": str(i),
+                      "logo": logo_val,
+                      "name": channel_name,
+                      "mpd": stream_url,
+                      "cookie": cookie_val
+                  }
+                  channels.append(channel_data)
+
+          with open("jcmrz", "w", encoding="utf-8") as f:
+              json.dump(channels, f, indent=4, ensure_ascii=False)
+          print("Successfully generated jcmrz")
+          '
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add jcmrz
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update jcmrz" && git push)
