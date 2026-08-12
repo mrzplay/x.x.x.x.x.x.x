@@ -61,4 +61,5 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
           git add jck.json
-          git diff --staging --quiet || (git commit -m "Auto-update cookie JSON" && git push)
+          git status
+          git diff --staged --quiet && echo "No changes to commit" || (git commit -m "Auto-update cookie JSON" && git push origin HEAD:main)
