@@ -8,8 +8,6 @@ on:
 jobs:
   update-cookie:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -32,13 +30,14 @@ jobs:
           import json
           import os
 
-          api_url = os.environ.get("JCK_URL")
+          url = os.environ.get("JCK_URL")
           
           try:
-              response = requests.get(api_url, timeout=15)
+              response = requests.get(url, timeout=15)
               data = response.json()
               
               if "cookie" in data:
+                  # acl=\/* থেকে ব্যাকস্ল্যাশ রিমোভ করা
                   cleaned_cookie = data["cookie"].replace(r"\/*", "/*")
                   
                   output_data = {
@@ -57,9 +56,7 @@ jobs:
 
       - name: Commit and Push changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git add jck.json
-          git status
-          git diff --staged --quiet && echo "No changes to commit" || (git commit -m "Auto-update cookie JSON" && git push origin HEAD:main)
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add jck
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update cookie.json" && git push)
