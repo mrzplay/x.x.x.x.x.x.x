@@ -31,23 +31,29 @@ jobs:
           import os
 
           url = os.environ.get("JCK_URL")
+          folder_name = "data"
+          
+          # ফোল্ডার না থাকলে তৈরি করে নেওয়া
+          if not os.path.exists(folder_name):
+              os.makedirs(folder_name, exist_ok=True)
+              
+          file_path = os.path.join(folder_name, "cookie.json")
           
           try:
               response = requests.get(url, timeout=15)
               data = response.json()
               
               if "cookie" in data:
-                  # acl=\/* থেকে ব্যাকস্ল্যাশ রিমোভ করা
                   cleaned_cookie = data["cookie"].replace(r"\/*", "/*")
                   
                   output_data = {
                       "cookie": cleaned_cookie
                   }
                   
-                  with open("cookie.json", "w", encoding="utf-8") as f:
+                  with open(file_path, "w", encoding="utf-8") as f:
                       json.dump(output_data, f, indent=4, ensure_ascii=False)
                   
-                  print("Successfully updated cookie.json")
+                  print(f"Successfully updated {file_path}")
               else:
                   print("Cookie key not found in API response.")
           except Exception as e:
@@ -58,5 +64,5 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
-          git add jck
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update cookie.json" && git push)
+          git add JCK/cookie.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update cookie in data folder" && git push)
