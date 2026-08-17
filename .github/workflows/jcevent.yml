@@ -1,0 +1,44 @@
+name: jcevent
+
+on:
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+  schedule:
+    - cron: '0 */6 * * *' # Runs every 6 hours (adjust as needed)
+
+permissions:
+  contents: write
+
+jobs:
+  extract-cookie:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch Playlist and Extract Cookie
+        run: |
+          # Fetch the M3U content from the secret API
+          RESPONSE=$(curl -s "${{ secrets.JCEVENT_URL }}")
+          
+          # Extract the cookie string (searching for hdntl=...)
+          COOKIE_VAL=$(echo "$RESPONSE" | grep -o 'hdntl=[^&[:space:]"]*' | head -n 1)
+          
+          if [ -z "$COOKIE_VAL" ]; then
+            echo "Error: Could not extract cookie!"
+            exit 1
+          fi
+
+          echo "Extracted Cookie successfully."
+
+          # Create the JSON file with the required format
+          jq -n --arg cookie "$COOKIE_VAL" '{cookie: $cookie}' > cookie.json
+          
+          cat cookie.json
+
+      - name: Commit and push changes if cookie updated
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git add JCE/jcevent.json
+          git diff --quiet && git diff --cached --quiet || (git commit -m "Auto-update jcevent [skip ci]" && git push)
