@@ -31,14 +31,14 @@ jobs:
           echo "Extracted Cookie successfully."
 
           # Create the JSON file with the required format
-          jq -n --arg cookie "$COOKIE_VAL" '{cookie: $cookie}' > cookie.json
+          jq -n --arg cookie "$COOKIE_VAL" '{cookie: $cookie}' > jcevent.json
           
-          cat cookie.json
+          cat jcevent'
+          .json
 
-      - name: Commit and push changes if cookie updated
+     - name: Commit and Push changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
           git add JCE/jcevent.json
-          git diff --quiet && git diff --cached --quiet || (git commit -m "Auto-update jcevent [skip ci]" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update jcevent json" && git push)
