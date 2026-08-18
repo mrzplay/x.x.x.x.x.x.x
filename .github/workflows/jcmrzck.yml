@@ -20,16 +20,30 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Fetch and Update JSON
+      - name: Fetch and Filter Cookie JSON
         env:
           JCMRZCK_URL: ${{ secrets.JCMRZCK_URL }}
         run: |
           mkdir -p JCMRZCK
-          python -c "import urllib.request, json, os; response = urllib.request.urlopen(os.environ['JCMRZCK_URL']); data = json.loads(response.read().decode()); open('JCMRZCK/jcmrzck.json', 'w').write(json.dumps(data, indent=4))"
+          python -c "
+          import urllib.request, json, os
+          response = urllib.request.urlopen(os.environ['JCMRZCK_URL'])
+          data = json.loads(response.read().decode())
+          
+          
+          cookie_value = data[0]['cookie'] if isinstance(data, list) and len(data) > 0 else data.get('cookie', '')
+          
+          output_data = {
+              'cookie': cookie_value
+          }
+          
+          with open('JCMRZCK/jcmrzck.json', 'w') as f:
+              json.dump(output_data, f, indent=4)
+          "
 
       - name: Commit and Push changes
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
           git add JCMRZCK/jcmrzck.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update jcmrzck.json via API" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update cookie in jcmrzck.json" && git push)
