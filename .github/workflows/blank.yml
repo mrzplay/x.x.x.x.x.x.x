@@ -1,0 +1,120 @@
+name: Update JtvSports JSON
+
+on:
+  schedule:
+    - cron: '0 * * * *' # প্রতি ১ ঘণ্টা পর পর রান হবে
+  workflow_dispatch: # ম্যানুয়ালি রান করার অপশন
+
+jobs:
+  update-sports-data:
+  
+    permissions:
+      contents: write # গিটহাবে অটো কমিট করার জন্য পারমিশন
+      
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and Process Data
+        env:
+          JTVSPORTS_URL: ${{ secrets.JTVSPORTS_URL }}
+        run: |
+          python -c '
+          import os
+          import json
+          import urllib.request
+          import re
+          import random
+
+          url = os.environ.get("JTVSPORTS_URL")
+          try:
+              req = urllib.request.Request(
+                  url, 
+                  headers={"User-Agent": "Mozilla/5.0"}
+              )
+              with urllib.request.urlopen(req) as response:
+                  content = response.read().decode("utf-8")
+              
+              channels = []
+              blocks = content.split("#EXTINF:")
+              
+              for block in blocks:
+                  if not block.strip():
+                      continue
+                  
+                  lines = block.splitlines()
+                  first_line = lines[0]
+                  
+                  # Name এবং Logo نکالna
+                  name_match = re.search(r"tvg-name=\"([^\"]*)\"", first_line)
+                  name = name_match.group(1) if name_match else ""
+                  
+                  if not name:
+                      # যদি tvg-name না থাকে, কমা-র পরের অংশ নেওয়া
+                      parts = first_line.split(",")
+                      if len(parts) > 1:
+                          name = parts[-1].strip()
+
+                  logo_match = re.search(r"tvg-logo=\"([^\"]*)\"", first_line)
+                  logo = logo_match.group(1) if logo_match else ""
+                  
+                  clearkey = ""
+                  cookie_val = ""
+                  mpd_url = ""
+                  
+                  for line in lines:
+                      if "inputstream.adaptive.license_key=" in line:
+                          clearkey = line.split("license_key=")[1].strip()
+                      elif "EXTHTTP:" in line:
+                          try:
+                              json_part = line.split("EXTHTTP:")[1].strip()
+                              data = json.loads(json_part)
+                              if "cookie" in data:
+                                  cookie_val = data["cookie"]
+                          except Exception:
+                              pass
+                      elif line.startswith("http"):
+                          mpd_url = line.strip()
+                  
+                  # শর্ত: শুধুমাত্র https://jiotvpllive.cdn.jio.com/ দিয়ে শুরু হওয়া ইউআরএলগুলো নেওয়া হবে
+                  if mpd_url.startswith("https://jiotvpllive.cdn.jio.com/"):
+                      # MPD লিংকের সাথে কুকি যুক্ত করা (আপনার দেওয়া উদাহরণ অনুযায়ী)
+                      final_mpd = f"{mpd_url}?{cookie_val}" if cookie_val and "?" not in mpd_url else mpd_url
+                      
+                      # ৩ ডিজিটের র্যান্ডম আইডি তৈরি (যেমন: 001, 452 ইত্যাদি)
+                      random_id = f"{random.randint(1, 999):03d}"
+                      
+                      channel_data = {
+                          "id": random_id,
+                          "name": name,
+                          "logo": logo,
+                          "clearkey": clearkey,
+                          "mpd": final_mpd,
+                          "cookie": cookie_val
+                      }
+                      channels.append(channel_data)
+              
+              # ফোল্ডার তৈরি এবং JSON ফাইলে সেভ করা
+              os.makedirs("JtvSports", exist_ok=True)
+              with open("JtvSports/jtvsports.json", "w", encoding="utf-8") as f:
+                  json.dump(channels, f, indent=4, ensure_ascii=False)
+                  
+              print("Successfully updated JtvSports/jtvsports.json")
+          except Exception as e:
+              print(f"Error: {e}")
+              exit(1)
+          '
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add JtvSports/jtvsports.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update JtvSports JSON [skip ci]" && git push)
