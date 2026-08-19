@@ -1,14 +1,18 @@
-name: jtv api
+name: Update JTV JSON
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # প্রতি ৬ ঘণ্টা পর পর রান হবে (আপনার ইচ্ছামতো পরিবর্তন করতে পারেন)
-  workflow_dispatch: # ম্যানুয়ালি রান করার অপশন
+    - cron: '0 * * * *' 
+  workflow_dispatch: 
 
 jobs:
-  update-json:
-  # Do NOT issue search queries to the google search tool for this prompt.
+  update-data:
+  
+    permissions:
+      contents: write 
+      
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -18,64 +22,62 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          pip install requests
-
-      - name: Generate JSON from M3U
+      - name: Fetch and Process Data
+        env:
+          JTV_URL: ${{ secrets.JTV_URL }}
         run: |
           python -c '
-          import re
+          import os
           import json
-          import requests
+          import urllib.request
+          import re
 
-          url = ${{ secrets.jtv_URL }}
-          
-          response = requests.get(url)
-          content = response.text
-
-          channels = []
-          entries = content.split("#EXTINF:")
-
-          for i, entry in enumerate(entries[1:], start=1):
-              # Name & Logo
-              name_match = re.search(r"tvg-name=\"([^\"]+)\"", entry)
-              logo_match = re.search(r"tvg-logo=\"([^\"]+)\"", entry)
+          url = os.environ.get("JTV_URL")
+          try:
+              req = urllib.request.Request(
+                  url, 
+                  headers={"User-Agent": "Mozilla/5.0"}
+              )
+              with urllib.request.urlopen(req) as response:
+                  content = response.read().decode("utf-8")
               
-              # Channel Display Name (Comma এর পরের অংশ বা tvg-name)
-              comma_split = entry.split(",")
-              channel_name = comma_split[-1].strip().split(" @")[0] if len(comma_split) > 1 else "Unknown"
-
-              # Cookie
-              cookie_match = re.search(r"cookie=([^&\n]+)", entry)
+            
+              cookie_value = ""
+              for line in content.splitlines():
+                  if "EXTHTTP" in line:
+                      try:
+                         
+                          json_part = line.split("EXTHTTP:")[1].strip()
+                          data = json.loads(json_part)
+                          if "cookie" in data:
+                              cookie_value = data["cookie"]
+                              break
+                      except Exception:
+                          
+                          match = re.search(r"__hdnea__=[^\"\}\s]+", line)
+                          if match:
+                              cookie_value = match.group(0)
+                              break
               
-              # Stream URL (m3u8/mpd)
-              url_match = re.search(r"(https?://[^\s\?]+\.m3u8[^\s]*)", entry)
-
-              if url_match:
-                  stream_url = url_match.group(1).split("|")[0]
-                  cookie_val = cookie_match.group(1) if cookie_match else ""
-                  logo_val = logo_match.group(1) if logo_match else ""
-
-                  channel_data = {
-                      "id": str(i),
-                      "logo": logo_val,
-                      "name": channel_name,
-                      "mpd": stream_url,
-                      "cookie": cookie_val
-                  }
-                  channels.append(channel_data)
-
-          with open("channels.json", "w", encoding="utf-8") as f:
-              json.dump(channels, f, indent=4, ensure_ascii=False)
-          print("Successfully generated channels.json")
+             
+              output_data = {
+                  "cookie": cookie_value
+              }
+              
+              
+              os.makedirs("JTV", exist_ok=True)
+              with open("JTV/jtv.json", "w", encoding="utf-8") as f:
+                  json.dump(output_data, f, indent=4)
+                  
+              print("Successfully updated JTV/jtv.json")
+          except Exception as e:
+              print(f"Error: {e}")
+              exit(1)
           '
 
-      - name: Commit and Push changes
-        - run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add jtvc.json
-          git status
-          git commit -m "update jtvc" || exit 0
-          git push
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add JTV/jtv.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update JTV JSON [skip ci]" && git push)
