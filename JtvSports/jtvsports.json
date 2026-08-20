@@ -182,5 +182,13 @@
         "clearkey": "7af2add2968a56309519ac2680c18f25:f992a14e0def17ccdfe16f58c4ce56c5",
         "mpd": "https://jiotvpllive.cdn.jio.com//bpk-tv/Star_Sports_2_Kannada_BTS/WDVLive/index.mpd?__hdnea__=st=1787227602~exp=1787249202~acl=/bpk-tv/Star_Sports_2_Kannada_BTS/WDVLive/*~hmac=b23ab4e12954bc104ab5a1b7f6928c6480366942e1f2c66e15a8a0c839181f16",
         "cookie": "__hdnea__=st=1787227602~exp=1787249202~acl=/bpk-tv/Star_Sports_2_Kannada_BTS/WDVLive/*~hmac=b23ab4e12954bc104ab5a1b7f6928c6480366942e1f2c66e15a8a0c839181f16"
+    },
+    {
+        "id": "134",
+        "name": "Star Jalsha HD",
+        "logo": "",
+        "clearkey": "9d4fac613fa6505c8f4c34269bad472a:4eb0380c9f3d517db1eeaa768a3e23ac",
+        "mpd": "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Jalsha_BTS/WDVLive/index.mpd?__hdnea__=st=1787227617~exp=1787249217~acl=/bpk-tv/Star_Jalsha_BTS/WDVLive/*~hmac=49d85221faeabdc51cd03a8ba53d6150b8da1df367c980d75fd78b96ea8413f9",
+        "cookie": "__hdnea__=st=1787227617~exp=1787249217~acl=/bpk-tv/Star_Jalsha_BTS/WDVLive/*~hmac=49d85221faeabdc51cd03a8ba53d6150b8da1df367c980d75fd78b96ea8413f9"
     }
 ]
