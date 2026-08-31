@@ -50,7 +50,6 @@ jobs:
               if not name_match:
                   continue
               raw_name = name_match.group(1)
-              # Clean name (remove 'By @sayan10' or similar tags if needed)
               name = re.sub(r'\s*(?:By|@).*$', '', raw_name).strip()
               
               # Extract Logo
@@ -65,12 +64,12 @@ jobs:
               cookie_match = re.search(r'#EXTVLCOPT:http-cookie=([^\s]+)', block)
               cookie = cookie_match.group(1) if cookie_match else ''
               
-              # Extract MPD URL
+              # Extract MPD URL and strip pipe parameters + trailing '?' if present
               url_match = re.findall(r'(https?://[^\s]+)', block)
               mpd_url = ''
               if url_match:
                   full_link = url_match[-1].split('|')[0]
-                  mpd_url = full_link
+                  mpd_url = full_link.rstrip('?')
 
               channels.append({
                   'id': f'{id_counter:03d}',
