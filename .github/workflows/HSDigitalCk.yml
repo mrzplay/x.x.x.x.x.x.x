@@ -1,0 +1,64 @@
+name: HSDigital_Cookie
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  update-cookie:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Extract Cookie and Save to JSON
+        env:
+          HSDIGITAL_URL: ${{ secrets.HSDIGITAL_URL }}
+        run: |
+          python3 -c "
+          import urllib.request
+          import re
+          import json
+          import os
+
+          url = os.environ['HSDIGITAL_URL']
+          req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+          
+          try:
+              with urllib.request.urlopen(req) as response:
+                  content = response.read().decode('utf-8')
+          except Exception as e:
+              print(f'Error fetching URL: {e}')
+              exit(1)
+
+          # Extract the first cookie match found in the source
+          cookie_match = re.search(r'#EXTVLCOPT:http-cookie=([^\s]+)', content)
+          cookie_value = cookie_match.group(1) if cookie_match else ''
+
+          data = {
+              'cookie': cookie_value
+          }
+
+          # Create directory if it doesn't exist
+          os.makedirs('HSDigital', exist_ok=True)
+
+          # Save to HSDigital/cookie.json
+          file_path = os.path.join('HSDigital', 'cookie.json')
+          with open(file_path, 'w', encoding='utf-8') as f:
+              json.dump(data, f, indent=4, ensure_ascii=False)
+              
+          print(f'Successfully generated {file_path}')
+          "
+
+      - name: Commit and push if changes exist
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add HSDigital/cookie.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update HSDigital/cookie.json [skip ci]" && git push)
