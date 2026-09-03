@@ -81,14 +81,6 @@
     },
     {
         "id": "011",
-        "name": "Star Sports 1 Kannada Digital",
-        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8138/1782284928138-h.jpg",
-        "clearkey": "eb2f9710abf44bb1bcf51400ccc00000:5f29f372823346e78934431f2a924065",
-        "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540068322/6409ab04235d4a0886656913f360c0a7/index.mpd",
-        "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
-    },
-    {
-        "id": "012",
         "name": "Star Sports 2 Kannada Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4797/1783000974797-h.jpg",
         "clearkey": "ae315fa52d544372a525f8b947a50000:8224183f754244c09664e825535aea4e",
@@ -96,7 +88,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "013",
+        "id": "012",
         "name": "Star Sports 3 Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/2523/1783001062523-h.jpg",
         "clearkey": "f718ac1c70414b7ead6ebffa05fa0000:7b3a3cb3eda946de88aa44bbaaa179bb",
@@ -104,7 +96,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "014",
+        "id": "013",
         "name": "Star Sports Select 1 Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1176/1783001141176-h.jpg",
         "clearkey": "ae3b1efc6eee47fa90e0360b16ad0000:3c8be3ec7a4e4ab6994725420d95f971",
@@ -112,7 +104,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "015",
+        "id": "014",
         "name": "Star Sports Select 2 Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7266/1783001217266-h.jpg",
         "clearkey": "9bced3f4d794419e99012ad6c1090000:c4c7f22fc71445c28ea15cb3fdb1b3be",
@@ -120,7 +112,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "016",
+        "id": "015",
         "name": "Asianet Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7408/1782289617408-h.jpg",
         "clearkey": "31a5c9e538e0462b9424921dd21d0000:117c7548f5574b638411c138fd3e2ed6",
@@ -128,7 +120,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "017",
+        "id": "016",
         "name": "Star Plus Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/2384/1782291852384-h.jpg",
         "clearkey": "f7bbfeaf9f7f4cada833072e21ed0000:d67f3522fb5a4b1d96daba62990a214e",
@@ -136,7 +128,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "018",
+        "id": "017",
         "name": "Star Jalsha Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4452/1782290464452-h.jpg",
         "clearkey": "2042ab988f5e4d95b03f9a01933c0000:3873b7044900428cb019fee9d14fd14a",
@@ -144,7 +136,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "019",
+        "id": "018",
         "name": "Star Maa Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1759/1782290731759-h.jpg",
         "clearkey": "3a6865c2eb484c57806a76e2719b0000:97c95a3bbfd344d9a16d96bad4f42ad7",
@@ -152,7 +144,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "020",
+        "id": "019",
         "name": "Star Pravah Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5780/1782291675780-h.jpg",
         "clearkey": "f7efc99766e643e687b1a228ae000000:6d45b6ab1b2840be943c8a99e8a0a0e5",
@@ -160,7 +152,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "021",
+        "id": "020",
         "name": "Colors Bangla Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8049/1782291598049-h.jpg",
         "clearkey": "4221bf5c8de94ff792982ee906a20000:d53a4b3ab73f454c8b7a4e7b7454fd97",
@@ -168,7 +160,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "022",
+        "id": "021",
         "name": "Star Vijay Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/698/1782289770698-h.jpg",
         "clearkey": "3d16a12b7fe0423d87e00c231d710000:f6aeb5898e5c4d8bab629a9de8befa12",
@@ -176,7 +168,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "023",
+        "id": "022",
         "name": "Star Suvarna Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6396/1782290646396-h.jpg",
         "clearkey": "d33b34f86a214120a3850f04a11e0000:36245c3005ce4f94a6d927d435508019",
@@ -184,7 +176,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "024",
+        "id": "023",
         "name": "Colors Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/108/1782291760108-h.jpg",
         "clearkey": "f762f7bf6bf04c999f861cc3dafe0000:25ec2364467f40b09fc1e9a7c1e72058",
@@ -192,7 +184,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "025",
+        "id": "024",
         "name": "Colors Kannada Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3440/1782291243440-h.jpg",
         "clearkey": "2427721df70c4992b6e2cf7d2abf0000:fb1d4dc6142344278550d82972ae003b",
@@ -200,7 +192,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "026",
+        "id": "025",
         "name": "Vijay Super Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1929/1782285031929-h.jpg",
         "clearkey": "08e4a1c2f55d4ed4878110a640920000:23dc3107bf284a0dbd93b1dc9f142459",
@@ -208,7 +200,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "027",
+        "id": "026",
         "name": "Asianet Plus Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/9207/1782286239207-h.jpg",
         "clearkey": "bfe3e4a7670e416d85261d002c3a0000:25955bb289a94ef5978ffa689eea066d",
@@ -216,7 +208,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "028",
+        "id": "027",
         "name": "Colors Super Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6181/1782290986181-h.jpg",
         "clearkey": "b3eb9d890c5c46f4b35595337c070000:c57a0ca2eeda41eeb83a0246d116c1d6",
@@ -224,7 +216,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "029",
+        "id": "028",
         "name": "Star Utsav Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/9181/1782291429181-h.jpg",
         "clearkey": "c3560074f30e4257ba6dfb196ecb0000:e044fed2851f4c268b59de3ef815d404",
@@ -232,7 +224,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "030",
+        "id": "029",
         "name": "Colors Marathi Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5106/1782291335106-h.jpg",
         "clearkey": "7baa28b028744858b64a7077e3f00000:8fcb860f70bc41b98e11cb7aee4f221b",
@@ -240,7 +232,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "031",
+        "id": "030",
         "name": "Colors Rishtey Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/9097/1782290579097-h.jpg",
         "clearkey": "99ccf903f1334204923c58cb8f190000:d91830218d044a218f46938c421ec49b",
@@ -248,7 +240,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "032",
+        "id": "031",
         "name": "Star Bharat Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8704/1782288318704-h.jpg",
         "clearkey": "b271001a8d2448aab89c0f5fc84f0000:a76a5ecde8764d8b9e40ce84888de269",
@@ -256,7 +248,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "033",
+        "id": "032",
         "name": "Star Kiran Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7412/1782282697412-h.jpg",
         "clearkey": "b81f831b7b2f4173aa16f7ec64340000:17b89f2c4e754dac87b91981a6cd7ad2",
@@ -264,7 +256,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "034",
+        "id": "033",
         "name": "Asianet Movies Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/7227/1782288617227-h.jpg",
         "clearkey": "6622e3b665db40be8b755150ff6e0000:4f4ab9edf51d4d39acff73b6dacb0b47",
@@ -272,7 +264,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "035",
+        "id": "034",
         "name": "Colors Bangla Cinema Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/4599/1782289524599-h.jpg",
         "clearkey": "01c12a7218654c38b7b38eaeb40e0000:41eca141f03640a3b8fede56336cffcf",
@@ -280,7 +272,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "036",
+        "id": "035",
         "name": "Jalsha Movies Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1445/1782291521445-h.jpg",
         "clearkey": "6e8ac9c358014b88ab8bae9c5fc70000:7c8ae76486624b8eaa7e24b852e08abc",
@@ -288,7 +280,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "037",
+        "id": "036",
         "name": "Maa Movies Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/2722/1782288522722-h.jpg",
         "clearkey": "c559e8b9079a458eadd5e9c7dbb40000:b6f184b3e9734b328773686363bfc465",
@@ -296,7 +288,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "038",
+        "id": "037",
         "name": "Star Gold Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6567/1784547656567-h.jpg",
         "clearkey": "2b582b2495204a1396cd8a714a2a0000:43992282cef64e1ca7ac3f8f6e633324",
@@ -304,7 +296,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "039",
+        "id": "038",
         "name": "Colors Cineplex Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3042/1782291173042-h.jpg",
         "clearkey": "215ced4a1eb7400488d290d09ebe0000:71b4165c9e294b06b88c1e0f4e953cc2",
@@ -312,7 +304,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "040",
+        "id": "039",
         "name": "Colors Kannada Cinema Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/3489/1782291093489-h.jpg",
         "clearkey": "f61b43f2b3a34a5daafacc05b7a30000:7105b6b6de914502a54667970e2dc9c0",
@@ -320,7 +312,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "041",
+        "id": "040",
         "name": "Nick Plus Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/470/1783938260470-h.jpg",
         "clearkey": "8446d54c24f549ba9c9323836a060000:db25bb59ba41470e82e4728f46781954",
@@ -328,7 +320,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "042",
+        "id": "041",
         "name": "Nick Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6807/1784039246807-h.jpg",
         "clearkey": "b0a76fc24ad548c5b92fb4eebfe90000:f7c8dc574a6e4937ab2c15e8ae2acedb",
@@ -336,7 +328,7 @@
         "cookie": "hdntl=exp=1788524607~acl=%2f*~id=152d0e7605c45ac23f83ebe5f53af943~data=hdntl~hmac=b6a05e60ab5eefbd93ed849270febb5bd98094762b0ff0bf9ae0eb56693a61e1"
     },
     {
-        "id": "043",
+        "id": "042",
         "name": "Sonic Digital",
         "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6294/1782290926294-h.jpg",
         "clearkey": "3d939611fa2e489bb4a7b58d10c10000:1fba40d5aa564f079c8c7e378ccb3019",
