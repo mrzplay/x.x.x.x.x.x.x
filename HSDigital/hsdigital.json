@@ -334,5 +334,37 @@
         "clearkey": "3d939611fa2e489bb4a7b58d10c10000:1fba40d5aa564f079c8c7e378ccb3019",
         "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540068791/78782613f6f54c38bf5961e9f066328a/index.mpd",
         "cookie": "hdntl=exp=1788843124~acl=%2f*~id=7fc19597d23ecc4f28a0f2724428bfd8~data=hdntl~hmac=02416c2fec0d3a39fe84c935b7094a6a3796afcfcb8d636d38d2a715609a1199"
+    },
+    {
+        "id": "043",
+        "name": "Disney Channel Digital by",
+        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1540/1785251571540-h.jpg",
+        "clearkey": "e6b31ccd0a5445b3aef9c40e5a0e0000:5f743841c396447b950d9c2be950dee0",
+        "mpd": "https://livetv.hotstar.com/mp2/gec-india-1540075053/f9f3720bed4e4ce0b644bfeec74f8fee/index.mpd",
+        "cookie": "hdntl=exp=1788843124~acl=%2f*~id=7fc19597d23ecc4f28a0f2724428bfd8~data=hdntl~hmac=02416c2fec0d3a39fe84c935b7094a6a3796afcfcb8d636d38d2a715609a1199"
+    },
+    {
+        "id": "044",
+        "name": "Super Hungama Digital by",
+        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/6961/1785252356961-h",
+        "clearkey": "151c6d430ec946a88dd41b7dcafb0000:29437c1b7f1d4289a6d4c1fc25d35891",
+        "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540075047/feca5fc6c1234205b01efe48d12d4c7f/index.mpd",
+        "cookie": "hdntl=exp=1788843124~acl=%2f*~id=7fc19597d23ecc4f28a0f2724428bfd8~data=hdntl~hmac=02416c2fec0d3a39fe84c935b7094a6a3796afcfcb8d636d38d2a715609a1199"
+    },
+    {
+        "id": "045",
+        "name": "Disney Junior Digital by",
+        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/1599/1785251761599-h",
+        "clearkey": "086abce59cd24b69b39b1f5b699e0000:96cbdf1109e0429780a7fa721f87e4ca",
+        "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540075059/9fcb1f02cf7249ef8428b9f3c981e08c/index.mpd",
+        "cookie": "hdntl=exp=1788843124~acl=%2f*~id=7fc19597d23ecc4f28a0f2724428bfd8~data=hdntl~hmac=02416c2fec0d3a39fe84c935b7094a6a3796afcfcb8d636d38d2a715609a1199"
+    },
+    {
+        "id": "046",
+        "name": "Disney Channel International Digital by",
+        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/328/1785251670328-h",
+        "clearkey": "e012c85b4106415791a17a9b192b0000:c847c31f531b4f97a08b7e3b87f71fa6",
+        "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540075056/a8fa5937ab1c4958870402ef81014cbe/index.mpd",
+        "cookie": "hdntl=exp=1788843124~acl=%2f*~id=7fc19597d23ecc4f28a0f2724428bfd8~data=hdntl~hmac=02416c2fec0d3a39fe84c935b7094a6a3796afcfcb8d636d38d2a715609a1199"
     }
 ]
