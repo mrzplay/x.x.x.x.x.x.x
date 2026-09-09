@@ -366,5 +366,13 @@
         "clearkey": "e012c85b4106415791a17a9b192b0000:c847c31f531b4f97a08b7e3b87f71fa6",
         "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540075056/a8fa5937ab1c4958870402ef81014cbe/index.mpd",
         "cookie": "hdntl=exp=1788986042~acl=%2f*~id=a74d7fd34a94f70b7f4ce7e8443c95d1~data=hdntl~hmac=5d66a2e877f639a6eae5e9594ab1ca6c2c37423316f7e1d257a38ebec91f23a6"
+    },
+    {
+        "id": "047",
+        "name": "National Geography Digital by",
+        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/5075/1785250005075-h",
+        "clearkey": "0f4f997a5f3846ec96fcceace11f0000:2a797cb86086466ebdb11f0fa9e7d701",
+        "mpd": "https://livetv.hotstar.com/mp2/gec-india-1540075050/4249b1f5294741fe9b93bb703122f7b3/index.mpd",
+        "cookie": "hdntl=exp=1788986042~acl=%2f*~id=a74d7fd34a94f70b7f4ce7e8443c95d1~data=hdntl~hmac=5d66a2e877f639a6eae5e9594ab1ca6c2c37423316f7e1d257a38ebec91f23a6"
     }
 ]
