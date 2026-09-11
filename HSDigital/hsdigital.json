@@ -374,5 +374,13 @@
         "clearkey": "0f4f997a5f3846ec96fcceace11f0000:2a797cb86086466ebdb11f0fa9e7d701",
         "mpd": "https://livetv.hotstar.com/mp2/gec-india-1540075050/4249b1f5294741fe9b93bb703122f7b3/index.mpd",
         "cookie": "hdntl=exp=1789202149~acl=%2f*~id=1f3704241163c7063921868d560f6ae9~data=hdntl~hmac=53661f5a6bf7e70fc7828c2ea8cd8911ffd02fceedd6ebbda02a4857ef62da12"
+    },
+    {
+        "id": "048",
+        "name": "MTV HD DIGITAL by",
+        "logo": "https://img10.hotstar.com/image/upload/f_auto/sources/r1/cms/prod/8633/1786020488633-h",
+        "clearkey": "8b5ceacdaff6457b961887cda56b0000:afde944e9cb24f29addedcd192c915e7",
+        "mpd": "https://livetv.hotstar.com/mp1/gec-india-1540075041/3a3fc861054b441a9e52e12627c7a2dd/index.mpd",
+        "cookie": "hdntl=exp=1789202149~acl=%2f*~id=1f3704241163c7063921868d560f6ae9~data=hdntl~hmac=53661f5a6bf7e70fc7828c2ea8cd8911ffd02fceedd6ebbda02a4857ef62da12"
     }
 ]
