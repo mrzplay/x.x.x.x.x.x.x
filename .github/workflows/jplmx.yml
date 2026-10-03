@@ -1,0 +1,83 @@
+name: Update JPLMX JSON
+
+on:
+  schedule:
+    - cron: '0 * * * *' # প্রতি ১ ঘণ্টা পর পর রান হবে
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Fetch and Transform JSON
+        env:
+          JPLMX_URL: ${{ secrets.JPLMX_URL }}
+        run: |
+          mkdir -p JPLMX
+          python -c "
+          import urllib.request, json, os
+
+          url = os.environ['JPLMX_URL']
+          req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+          
+          try:
+              with urllib.request.urlopen(req) as response:
+                  res_data = json.loads(response.read().decode())
+              
+              # সফল বা ফেইলিওর লিস্ট থেকে ডেটা নেওয়া (যেখানে চ্যানেলগুলো অ্যাভেইলেবল)
+              channels_source = res_data.get('successful_results', [])
+              if not channels_source:
+                  channels_source = res_data.get('failed_results', [])
+
+              transformed_list = []
+              for item in channels_source:
+                  details = item.get('error_details', item)
+                  mpd_url = details.get('final_url', item.get('mpd', ''))
+                  
+                  # MPD URL থেকে কুকি বা টোকেন (__hdnea__) এক্সট্রাক্ট করা
+                  cookie_val = ''
+                  if '?' in mpd_url:
+                      query_part = mpd_url.split('?')[1]
+                      if '__hdnea__=' in query_part:
+                          for param in query_part.split('&'):
+                              if param.startswith('__hdnea__='):
+                                  cookie_val = param
+                                  break
+                      else:
+                          cookie_val = query_part
+
+                  channel_entry = {
+                      'id': str(item.get('channel_id', item.get('id', ''))),
+                      'name': item.get('channel_name', item.get('name', '')),
+                      'logo': item.get('logo', ''),
+                      'clearkey': item.get('clearkey', ''),
+                      'mpd': mpd_url,
+                      'cookie': cookie_val
+                  }
+                  transformed_list.append(channel_entry)
+
+              with open('JPLMX/jplmx.json', 'w') as f:
+                  json.dump(transformed_list, f, indent=4)
+              print('Successfully updated JPLMX/jplmx.json')
+          except Exception as e:
+              print(f'Error updating JSON: {e}')
+              exit(1)
+          "
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add JPLMX/jplmx.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update jplmx.json every 1 hour" && git push)
