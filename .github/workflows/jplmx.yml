@@ -1,4 +1,4 @@
-name: Update JPLMX JSON
+name: JPLMX
 
 on:
   schedule:
