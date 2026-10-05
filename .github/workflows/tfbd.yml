@@ -1,68 +1,102 @@
-name: tfbd api
+name: TFBD
+
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *' # প্রতি ১ ঘণ্টা পর পর রান হবে
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-data:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: actions/github-script@v7
-        env:
-          M3U_URL: ${{ secrets.tfbd_URL }}
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          script: |
-            const fs = require('fs');
+          python-version: '3.10'
 
-            const m3uUrl = process.env.M3U_URL;
-            if (!m3uUrl) {
-              console.error('tfbd_URL secret is not set');
-              return;
-            }
+      - name: Fetch and Parse M3U to JSON
+        env:
+          TFBD_URL: ${{ secrets.TFBD_URL }}
+        run: |
+          mkdir -p TFBD
+          python -c "
+          import urllib.request, os, re, json
 
-            // Fetch the M3U content from URL
-            const response = await fetch(m3uUrl, {
-              headers: { 'User-Agent': 'Mozilla/5.0' }
-            });
+          url = os.environ['TFBD_URL']
+          req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+          
+          try:
+              with urllib.request.urlopen(req) as response:
+                  m3u_content = response.read().decode('utf-8')
+              
+              lines = m3u_content.splitlines()
+              channels = []
+              
+              current_logo = ''
+              current_name = ''
+              channel_counter = 1
+              
+              for line in lines:
+                  line = line.strip()
+                  if line.startswith('#EXTINF:'):
+                      # tvg-logo এক্সট্রাক্ট করা
+                      logo_match = re.search(r'tvg-logo=\"([^\"]+)\"', line)
+                      current_logo = logo_match.group(1) if logo_match else ''
+                      
+                      # চ্যানেলের নাম (কমা বা কমা-স্পেস এর পরের অংশ)
+                      if ',' in line:
+                          current_name = line.split(',')[-1].strip()
+                  
+                  elif line.startswith('http'):
+                      mpd_url = line
+                      
+                      # URL থেকে কুকি বা টোকেন (edge-cache-token বা কোয়েরি স্ট্রিং) এক্সট্রাক্ট করা
+                      cookie_val = ''
+                      if '?' in mpd_url:
+                          query_part = mpd_url.split('?')[1]
+                          if 'edge-cache-token=' in query_part:
+                              for param in query_part.split('&'):
+                                  if param.startswith('edge-cache-token='):
+                                      cookie_val = param
+                                      break
+                          else:
+                              cookie_val = query_part
 
-            if (!response.ok) {
-              console.error('Failed to fetch M3U:', response.status);
-              return;
-            }
+                      # তিন অঙ্কের ফরম্যাট আইডি তৈরি (যেমন: 001, 002, ...)
+                      id_str = f'{channel_counter:03d}'
 
-            const m3uContent = await response.text();
-            const lines = m3uContent.split('\n');
-            let outputData = {};
-            const seenCookies = new Set();
+                      channel_entry = {
+                          'id': id_str,
+                          'name': current_name,
+                          'logo': current_logo,
+                          'clearkey': '',
+                          'mpd': mpd_url,
+                          'cookie': cookie_val
+                      }
+                      channels.append(channel_entry)
+                      
+                      # রিসেট এবং কাউন্টার বৃদ্ধি
+                      channel_counter += 1
+                      current_logo = ''
+                      current_name = ''
 
-            for (const line of lines) {
-              const trimmed = line.trim();
+              with open('TFBD/tfbd.json', 'w', encoding='utf-8') as f:
+                  json.dump(channels, f, indent=4, ensure_ascii=False)
+              print('Successfully updated TFBD/tfbd.json')
+          except Exception as e:
+              print(f'Error processing M3U data: {e}')
+              exit(1)
+          "
 
-              // Match lines like: #EXTHTTP:{"cookie":"..."}
-              if (trimmed.startsWith('#EXTHTTP:')) {
-                try {
-                  const jsonStr = trimmed.slice('#EXTHTTP:'.length);
-                  const parsed = JSON.parse(jsonStr);
-                  if (parsed.cookie && !seenCookies.has(parsed.cookie)) {
-                    seenCookies.add(parsed.cookie);
-                    outputData = {cookie: parsed.cookie};
-                  }
-                } catch (e) {
-                  console.warn('Failed to parse EXTHTTP line:', trimmed);
-                }
-              }
-            }
-
-            fs.writeFileSync('tfbd.json', JSON.stringify(outputData, null, 4), 'utf8');
-            console.log(`Extracted ${outputData.length} unique cookies`);
-
-      - run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add tfbd.json
-          git status
-          git commit -m "update tfbd" || exit 0
-          git push
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
+          git add TFBD/tfbd.json
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update tfbd.json every 1 hour" && git push)
