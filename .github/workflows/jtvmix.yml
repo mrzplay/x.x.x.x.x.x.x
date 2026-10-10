@@ -62,26 +62,41 @@ jobs:
                       current_clearkey = line.split('=', 1)[1].strip()
                   
                   elif line.startswith('http'):
-                      mpd_url = line
+                      raw_url = line
                       
-                      # MPD ইউআরএল থেকে কুকি বা টোকেন (__hdnea__) এক্সট্রাক্ট করা
+                      # পাইপ (|) বা এক্সট্রা প্যারামিটার আলাদা করা
+                      mpd_url = raw_url
                       cookie_val = ''
-                      if '?' in mpd_url:
-                          query_part = mpd_url.split('?')[1]
-                          if '__hdnea__=' in query_part:
-                              for param in query_part.split('&'):
-                                  if param.startswith('__hdnea__='):
-                                      cookie_val = param
+                      
+                      if '|' in raw_url:
+                          mpd_url, params = raw_url.split('|', 1)
+                          if 'cookie=' in params:
+                              for p in params.split('&'):
+                                  if p.startswith('cookie='):
+                                      cookie_val = p.split('=', 1)[1]
                                       break
-                          else:
-                              cookie_val = query_part
+                      
+                      # যদি পাইপ থেকে কুকি না পাওয়া যায়, তবে ইউআরএলের ভেতরের __hdnea__ খোঁজা
+                      if not cookie_val and '__hdnea__=' in raw_url:
+                          match_hd = re.search(r'(__hdnea__=[^&\s]+)', raw_url)
+                          if match_hd:
+                              cookie_val = match_hd.group(1)
+
+                      # মূল এমপিডি লিংক থেকে অতিরিক্ত কুয়েরি স্ট্রিং রিমুভ করে ক্লিন করা
+                      if '?' in mpd_url:
+                          base_mpd = mpd_url.split('?')[0]
+                      else:
+                          base_mpd = mpd_url
+
+                      # চূড়ান্ত এমপিডি লিংক তৈরি: mpd?cookie ফরম্যাটে
+                      final_mpd_link = f'{base_mpd}?{cookie_val}' if cookie_val else base_mpd
 
                       channel_entry = {
                           'id': current_id,
                           'name': current_name,
                           'logo': current_logo,
                           'clearkey': current_clearkey,
-                          'mpd': mpd_url,
+                          'mpd': final_mpd_link,
                           'cookie': cookie_val
                       }
                       channels.append(channel_entry)
