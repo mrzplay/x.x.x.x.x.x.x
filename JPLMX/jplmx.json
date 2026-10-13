@@ -8,32 +8,8 @@
         "cookie": ""
     },
     {
-        "id": "460",
-        "name": "Star Sports Select 1 HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "164",
-        "name": "Travelxp HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1332",
-        "name": "Nat Geo Wild HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1335",
-        "name": "National Geographic HD",
+        "id": "821",
+        "name": "Sony BBC Earth HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -48,30 +24,6 @@
         "cookie": ""
     },
     {
-        "id": "167",
-        "name": "Zee TV HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "821",
-        "name": "Sony BBC Earth HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "472",
-        "name": "And TV HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
         "id": "1115",
         "name": "Star Movies",
         "logo": "",
@@ -80,32 +32,8 @@
         "cookie": ""
     },
     {
-        "id": "415",
-        "name": "Zee Anmol Cinema",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1123",
-        "name": "Star Sports Select 1",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1668",
-        "name": "And Xplor HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "461",
-        "name": "Star Sports Select 2 HD",
+        "id": "460",
+        "name": "Star Sports Select 1 HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -120,8 +48,80 @@
         "cookie": ""
     },
     {
+        "id": "164",
+        "name": "Travelxp HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "415",
+        "name": "Zee Anmol Cinema",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1668",
+        "name": "And Xplor HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1123",
+        "name": "Star Sports Select 1",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "167",
+        "name": "Zee TV HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "472",
+        "name": "And TV HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
         "id": "3276",
         "name": "Star Movies Select",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1335",
+        "name": "National Geographic HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1332",
+        "name": "Nat Geo Wild HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "461",
+        "name": "Star Sports Select 2 HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -136,14 +136,6 @@
         "cookie": ""
     },
     {
-        "id": "1106",
-        "name": "Star Sports 1 HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
         "id": "1142",
         "name": "Star Sports 1",
         "logo": "",
@@ -152,8 +144,8 @@
         "cookie": ""
     },
     {
-        "id": "1108",
-        "name": "Star Sports 1 Hindi HD",
+        "id": "1106",
+        "name": "Star Sports 1 HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -176,14 +168,6 @@
         "cookie": ""
     },
     {
-        "id": "1984",
-        "name": "Star Sports 2 Hindi HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
         "id": "1141",
         "name": "Star Sports 2",
         "logo": "",
@@ -192,24 +176,8 @@
         "cookie": ""
     },
     {
-        "id": "3278",
-        "name": "Star Sports 1 Telugu HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1985",
-        "name": "Star Sports 2 Hindi",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "3277",
-        "name": "Star Sports 1 Tamil HD",
+        "id": "1984",
+        "name": "Star Sports 2 Hindi HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -224,8 +192,8 @@
         "cookie": ""
     },
     {
-        "id": "1651",
-        "name": "Star Sports 1 Telugu",
+        "id": "1108",
+        "name": "Star Sports 1 Hindi HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -240,16 +208,8 @@
         "cookie": ""
     },
     {
-        "id": "3273",
-        "name": "Star Sports 2 Tamil HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1124",
-        "name": "Star Sports 1 Tamil",
+        "id": "3277",
+        "name": "Star Sports 1 Tamil HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -264,8 +224,24 @@
         "cookie": ""
     },
     {
-        "id": "2853",
-        "name": "Star Sports 2 Tamil",
+        "id": "1985",
+        "name": "Star Sports 2 Hindi",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1124",
+        "name": "Star Sports 1 Tamil",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "3273",
+        "name": "Star Sports 2 Tamil HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -280,16 +256,16 @@
         "cookie": ""
     },
     {
-        "id": "165",
-        "name": "Zee Cinema HD",
+        "id": "2853",
+        "name": "Star Sports 2 Tamil",
         "logo": "",
         "clearkey": "",
         "mpd": "",
         "cookie": ""
     },
     {
-        "id": "2852",
-        "name": "Star Sports 2 Telugu",
+        "id": "3278",
+        "name": "Star Sports 1 Telugu HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -304,14 +280,6 @@
         "cookie": ""
     },
     {
-        "id": "413",
-        "name": "Zee Cinemalu",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
         "id": "414",
         "name": "Zee Yuva",
         "logo": "",
@@ -320,16 +288,8 @@
         "cookie": ""
     },
     {
-        "id": "442",
-        "name": "Zee 24 Taas",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "445",
-        "name": "Zee Marathi",
+        "id": "413",
+        "name": "Zee Cinemalu",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -344,8 +304,8 @@
         "cookie": ""
     },
     {
-        "id": "484",
-        "name": "Zee Cinema",
+        "id": "442",
+        "name": "Zee 24 Taas",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -354,6 +314,38 @@
     {
         "id": "487",
         "name": "Zee Bollywood",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1651",
+        "name": "Star Sports 1 Telugu",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "165",
+        "name": "Zee Cinema HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "445",
+        "name": "Zee Marathi",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "2852",
+        "name": "Star Sports 2 Telugu",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -376,14 +368,6 @@
         "cookie": ""
     },
     {
-        "id": "625",
-        "name": "Zee Bangla",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
         "id": "572",
         "name": "Zee UP UK",
         "logo": "",
@@ -392,8 +376,8 @@
         "cookie": ""
     },
     {
-        "id": "628",
-        "name": "Zee Tamil",
+        "id": "625",
+        "name": "Zee Bangla",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -408,80 +392,8 @@
         "cookie": ""
     },
     {
-        "id": "657",
-        "name": "Zee Business",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "659",
-        "name": "Zee Rajasthan",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "689",
-        "name": "Zee Kannada",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "654",
-        "name": "Zee Punjab Haryana HP",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "929",
-        "name": "Zee 24 Kalak",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "724",
-        "name": "Zee Delhi NCR Haryana",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "658",
-        "name": "Zee MP Chattisgarh",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1319",
-        "name": "Zee Cafe HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1351",
-        "name": "Zee TV",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "661",
-        "name": "Zee Bihar Jharkhand",
+        "id": "628",
+        "name": "Zee Tamil",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -496,8 +408,80 @@
         "cookie": ""
     },
     {
+        "id": "657",
+        "name": "Zee Business",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "654",
+        "name": "Zee Punjab Haryana HP",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "658",
+        "name": "Zee MP Chattisgarh",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "689",
+        "name": "Zee Kannada",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "661",
+        "name": "Zee Bihar Jharkhand",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "724",
+        "name": "Zee Delhi NCR Haryana",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "929",
+        "name": "Zee 24 Kalak",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
         "id": "722",
         "name": "Zee Sarthak",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "659",
+        "name": "Zee Rajasthan",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "484",
+        "name": "Zee Cinema",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -520,6 +504,14 @@
         "cookie": ""
     },
     {
+        "id": "1351",
+        "name": "Zee TV",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
         "id": "1358",
         "name": "Zee Talkies HD",
         "logo": "",
@@ -528,16 +520,8 @@
         "cookie": ""
     },
     {
-        "id": "1641",
-        "name": "Zee Keralam HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1363",
-        "name": "Zee Cinemalu HD",
+        "id": "1319",
+        "name": "Zee Cafe HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -560,16 +544,8 @@
         "cookie": ""
     },
     {
-        "id": "1751",
-        "name": "Zee Punjabi",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1745",
-        "name": "Zee Biskope",
+        "id": "1363",
+        "name": "Zee Cinemalu HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -584,32 +560,16 @@
         "cookie": ""
     },
     {
-        "id": "2757",
-        "name": "Zee Zest HD",
+        "id": "1641",
+        "name": "Zee Keralam HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
         "cookie": ""
     },
     {
-        "id": "2742",
-        "name": "Zee Kannada News",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "1977",
-        "name": "Zee Bangla HD",
-        "logo": "",
-        "clearkey": "",
-        "mpd": "",
-        "cookie": ""
-    },
-    {
-        "id": "2761",
-        "name": "Zee Anmol Cinema 2",
+        "id": "1745",
+        "name": "Zee Biskope",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -624,6 +584,22 @@
         "cookie": ""
     },
     {
+        "id": "1751",
+        "name": "Zee Punjabi",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "1977",
+        "name": "Zee Bangla HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
         "id": "3031",
         "name": "Zee Telugu News",
         "logo": "",
@@ -632,8 +608,24 @@
         "cookie": ""
     },
     {
-        "id": "3051",
-        "name": "Zee Thirai HD",
+        "id": "2742",
+        "name": "Zee Kannada News",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "2757",
+        "name": "Zee Zest HD",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "2761",
+        "name": "Zee Anmol Cinema 2",
         "logo": "",
         "clearkey": "",
         "mpd": "",
@@ -642,6 +634,14 @@
     {
         "id": "3476",
         "name": "Zee Bangla Sonar",
+        "logo": "",
+        "clearkey": "",
+        "mpd": "",
+        "cookie": ""
+    },
+    {
+        "id": "3051",
+        "name": "Zee Thirai HD",
         "logo": "",
         "clearkey": "",
         "mpd": "",
